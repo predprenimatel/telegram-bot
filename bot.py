@@ -48,5 +48,6 @@ async def main():
 
 # Запуск бота
 if __name__ == "__main__":
-    # Просто вызываем main() напрямую, без asyncio.run()
-    main()
+    import asyncio
+    # Теперь используем asyncio.run() для асинхронного вызова main()
+    asyncio.run(main())
