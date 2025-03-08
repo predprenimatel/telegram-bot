@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 # Функция обработчика команды /start
 async def start(update: Update, context: CallbackContext):
     webapp_url = "https://fincred.space/appfin.html"
-    image_url = "https://imgur.com/a/GEj9eCh"  # Замените на реальную ссылку на изображение
+    image_url = "https://your-image-url.com/image.jpg"  # Замените на реальную ссылку на изображение
 
     # Кнопка "Оформити кредит"
     keyboard = [[InlineKeyboardButton("💰 Оформити кредит", url=webapp_url)]]
@@ -30,7 +30,7 @@ async def start(update: Update, context: CallbackContext):
 
 # Функция запуска бота
 async def main():
-    TOKEN = os.getenv("7754574609:AAEIsZk3EnKCOQTr5w-ubmAiaBNkCbZr080")  # Укажите правильную переменную окружения
+    TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")  # Укажите правильную переменную окружения
 
     if not TOKEN:
         logger.error("❌ Токен відсутній! Укажіть його в змінних оточення.")
