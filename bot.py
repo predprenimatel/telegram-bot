@@ -1,6 +1,6 @@
 import os
 import logging
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, InputFile
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import Application, CommandHandler, CallbackContext
 
 # Включаем логирование
@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 # Функция обработчика команды /start
 async def start(update: Update, context: CallbackContext):
     webapp_url = "https://fincred.space/appfin.html"
-    image_url = "https://your-image-url.com/image.jpg"  # Замените на реальную ссылку на изображение
+    image_url = "https://imgur.com/a/GEj9eCh"  # Замените на реальную ссылку на изображение
 
     # Кнопка "Оформити кредит"
     keyboard = [[InlineKeyboardButton("💰 Оформити кредит", url=webapp_url)]]
@@ -30,27 +30,28 @@ async def start(update: Update, context: CallbackContext):
 
 # Функция запуска бота
 async def main():
-    TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")  # Укажите правильную переменную окружения
+    TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
     if not TOKEN:
         logger.error("❌ Токен відсутній! Укажіть його в змінних оточення.")
         return
-    
+
     application = Application.builder().token(TOKEN).build()
 
     # Добавляем обработчики команд
     application.add_handler(CommandHandler("start", start))
 
     logger.info("✅ Бот запущений! Очікуємо повідомлення...")
-    
+
     # Запуск бота
-    await application.run_polling()
+    try:
+        await application.run_polling()
+    except Exception as e:
+        logger.error(f"⚠ Помилка запуску бота: {e}")
 
 # Запуск бота
 if __name__ == "__main__":
     import asyncio
 
-    try:
-        asyncio.run(main())
-    except Exception as e:
-        logger.error(f"⚠ Помилка запуску бота: {e}")
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())  # Запускаем main через event loop
