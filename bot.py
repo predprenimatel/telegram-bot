@@ -50,5 +50,6 @@ async def main():
 if __name__ == "__main__":
     import asyncio
 
-    # Используем asyncio.run() для правильного запуска
-    asyncio.run(main())
+    # Используем уже существующий цикл событий
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
