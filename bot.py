@@ -53,5 +53,5 @@ async def main():
 if __name__ == "__main__":
     import asyncio
 
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())  # Запускаем main через event loop
+    # Используем asyncio.run() вместо get_event_loop
+    asyncio.run(main())
