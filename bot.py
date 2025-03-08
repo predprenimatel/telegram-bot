@@ -1,6 +1,6 @@
 import os
 import logging
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, InputFile
 from telegram.ext import Application, CommandHandler, CallbackContext
 
 # Включаем логирование
@@ -12,21 +12,28 @@ logger = logging.getLogger(__name__)
 # Функция обработчика команды /start
 async def start(update: Update, context: CallbackContext):
     webapp_url = "https://fincred.space/appfin.html"
-    
-    keyboard = [[InlineKeyboardButton("📲 Открыть мини-приложение", url=webapp_url)]]
+    image_url = "https://imgur.com/a/GEj9eCh"  # Замените на реальную ссылку на изображение
+
+    # Кнопка "Оформити кредит"
+    keyboard = [[InlineKeyboardButton("💰 Оформити кредит", url=webapp_url)]]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
-    await update.message.reply_text(
-        "Привет! Нажмите кнопку ниже, чтобы оформить микрозайм прямо в Telegram.",
-        reply_markup=reply_markup,
+    # Приветственное сообщение
+    welcome_text = (
+        "👋 Вітаємо у сервісі підбору кредитів!\n\n"
+        "💵 Отримайте швидку фінансову допомогу без зайвих документів.\n"
+        "📲 Просто натисніть кнопку нижче, щоб оформити заявку!"
     )
+
+    # Отправка изображения
+    await update.message.reply_photo(photo=image_url, caption=welcome_text, reply_markup=reply_markup)
 
 # Функция запуска бота
 async def main():
-    TOKEN = os.getenv("7754574609:AAEIsZk3EnKCOQTr5w-ubmAiaBNkCbZr080")
+    TOKEN = os.getenv("7754574609:AAEIsZk3EnKCOQTr5w-ubmAiaBNkCbZr080")  # Укажите правильную переменную окружения
 
     if not TOKEN:
-        logger.error("❌ Токен отсутствует! Укажите его в переменных окружения.")
+        logger.error("❌ Токен відсутній! Укажіть його в змінних оточення.")
         return
     
     application = Application.builder().token(TOKEN).build()
@@ -34,7 +41,7 @@ async def main():
     # Добавляем обработчики команд
     application.add_handler(CommandHandler("start", start))
 
-    logger.info("✅ Бот запущен! Ожидаем сообщения...")
+    logger.info("✅ Бот запущений! Очікуємо повідомлення...")
     
     # Запуск бота
     await application.run_polling()
@@ -46,4 +53,4 @@ if __name__ == "__main__":
     try:
         asyncio.run(main())
     except Exception as e:
-        logger.error(f"⚠ Ошибка запуска бота: {e}")
+        logger.error(f"⚠ Помилка запуску бота: {e}")
