@@ -1,7 +1,7 @@
 import os
 import logging
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
-from telegram.ext import Application, CommandHandler, CallbackContext
+from telegram.ext import Updater, CommandHandler, CallbackContext
 
 # Включаем логирование
 logging.basicConfig(
@@ -10,7 +10,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Функция обработчика команды /start
-async def start(update: Update, context: CallbackContext):
+def start(update: Update, context: CallbackContext):
     webapp_url = "https://fincred.space/appfin.html"
     image_url = "https://imgur.com/a/GEj9eCh"  # Замените на реальную ссылку на изображение
 
@@ -26,28 +26,33 @@ async def start(update: Update, context: CallbackContext):
     )
 
     # Отправка изображения
-    await update.message.reply_photo(photo=image_url, caption=welcome_text, reply_markup=reply_markup)
+    update.message.reply_photo(photo=image_url, caption=welcome_text, reply_markup=reply_markup)
 
 # Функция запуска бота
-async def main():
+def main():
     TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
     if not TOKEN:
         logger.error("❌ Токен відсутній! Укажіть його в змінних оточення.")
         return
 
-    application = Application.builder().token(TOKEN).build()
+    # Создаем объект Updater с токеном
+    updater = Updater(TOKEN, use_context=True)
+
+    # Получаем диспетчер
+    dispatcher = updater.dispatcher
 
     # Добавляем обработчики команд
-    application.add_handler(CommandHandler("start", start))
+    dispatcher.add_handler(CommandHandler("start", start))
 
     logger.info("✅ Бот запущений! Очікуємо повідомлення...")
 
-    # Запуск бота (не нужно вызывать shutdown вручную)
-    await application.run_polling()
+    # Запуск бота
+    updater.start_polling()
+
+    # Ждем завершения работы
+    updater.idle()
 
 # Запуск бота
 if __name__ == "__main__":
-    import asyncio
-    # Теперь используем asyncio.run() для асинхронного вызова main()
-    asyncio.run(main())
+    main()
