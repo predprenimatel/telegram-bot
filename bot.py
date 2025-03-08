@@ -48,10 +48,13 @@ async def main():
         await application.run_polling()
     except Exception as e:
         logger.error(f"⚠ Помилка запуску бота: {e}")
+    finally:
+        # Явный вызов shutdown
+        await application.shutdown()
 
 # Запуск бота
 if __name__ == "__main__":
     import asyncio
 
-    # Используем asyncio.run() вместо get_event_loop
+    # Используем asyncio.run() для правильного запуска
     asyncio.run(main())
