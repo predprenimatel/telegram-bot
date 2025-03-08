@@ -48,8 +48,5 @@ async def main():
 
 # Запуск бота
 if __name__ == "__main__":
-    import asyncio
-
-    # Используем уже существующий цикл событий
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
+    # Просто вызываем main() напрямую, без asyncio.run()
+    main()
