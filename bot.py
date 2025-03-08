@@ -43,14 +43,8 @@ async def main():
 
     logger.info("✅ Бот запущений! Очікуємо повідомлення...")
 
-    # Запуск бота
-    try:
-        await application.run_polling()
-    except Exception as e:
-        logger.error(f"⚠ Помилка запуску бота: {e}")
-    finally:
-        # Явный вызов shutdown
-        await application.shutdown()
+    # Запуск бота (не нужно вызывать shutdown вручную)
+    await application.run_polling()
 
 # Запуск бота
 if __name__ == "__main__":
