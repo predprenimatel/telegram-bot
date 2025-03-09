@@ -1,6 +1,6 @@
 import os
 import logging
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, WebAppInfo
 from telegram.ext import Updater, CommandHandler, CallbackContext
 
 # Включаем логирование
@@ -14,18 +14,18 @@ def start(update: Update, context: CallbackContext):
     webapp_url = "https://fincred.space/appfin.html"
     image_url = "https://imgur.com/a/GEj9eCh"  # Замените на реальную ссылку на изображение
 
-    # Кнопка "Оформити кредит"
-    keyboard = [[InlineKeyboardButton("💰 Оформити кредит", url=webapp_url)]]
+    # Кнопка для запуска веб-приложения
+    keyboard = [[InlineKeyboardButton("🚀 Запустити додаток", web_app=WebAppInfo(url=webapp_url))]]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     # Приветственное сообщение
     welcome_text = (
         "👋 Вітаємо у сервісі підбору кредитів!\n\n"
         "💵 Отримайте швидку фінансову допомогу без зайвих документів.\n"
-        "📲 Просто натисніть кнопку нижче, щоб оформити заявку!"
+        "📲 Просто натисніть кнопку нижче, щоб запустити додаток!"
     )
 
-    # Отправка изображения
+    # Отправка изображения с кнопкой
     update.message.reply_photo(photo=image_url, caption=welcome_text, reply_markup=reply_markup)
 
 # Функция запуска бота
