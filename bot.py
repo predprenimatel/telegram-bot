@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 # Функция обработчика команды /start
 async def start(update: Update, context: CallbackContext):
     webapp_url = "https://finappvercel.vercel.app/"
-    image_url = "https://imgur.com/a/GEj9eCh"  # Замените на реальную ссылку на изображение
+    image_url = "https://imgur.com/a/vXTU7Jc"  # Замените на реальную ссылку на изображение
 
     # Кнопка для запуска веб-приложения
     keyboard = [[InlineKeyboardButton("🚀 Запустити додаток", web_app=WebAppInfo(url=webapp_url))]]
